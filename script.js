@@ -15,9 +15,9 @@ const size = 10,
   playerRotationSpeed = 6,
   blockDensity = 0.15,
   fov = Math.PI / 2,
-  rayRes = 220,
+  rayRes = 200,
   rayMaxDist = 6,
-  rayTestInterval = 0.02;
+  rayTestInterval = 0.025;
 
 // Global variables
 var player,
@@ -212,7 +212,7 @@ function update(mod) {
       ) {
         if (grid[x]?.[y]) {
           if (
-            circle2rect(
+            F.collide.circle2rect(
               { ...player, x: player.x + vel.x },
               { x, y, w: 1, h: 1 },
             )
@@ -220,7 +220,7 @@ function update(mod) {
             vel.x = 0;
           }
           if (
-            circle2rect(
+            F.collide.circle2rect(
               { ...player, y: player.y + vel.y },
               { x, y, w: 1, h: 1 },
             )
@@ -260,29 +260,6 @@ function update(mod) {
       max: F.angle2coords(eyes.x, eyes.y, angle, rayMaxDist),
     });
   }
-}
-
-function circle2rect(circle, rect) {
-  var distX = Math.abs(circle.x - rect.x - rect.w / 2);
-  var distY = Math.abs(circle.y - rect.y - rect.h / 2);
-
-  if (distX > rect.w / 2 + circle.r) {
-    return false;
-  }
-  if (distY > rect.h / 2 + circle.r) {
-    return false;
-  }
-
-  if (distX <= rect.w / 2) {
-    return true;
-  }
-  if (distY <= rect.h / 2) {
-    return true;
-  }
-
-  var dx = distX - rect.w / 2;
-  var dy = distY - rect.h / 2;
-  return dx * dx + dy * dy <= circle.r * circle.r;
 }
 
 // Run game
