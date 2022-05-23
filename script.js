@@ -195,7 +195,7 @@ function update(mod) {
       player.v = 0;
     }
   }
-  player.v = F.border(player.v, -playerMaxVelocity, playerMaxVelocity);
+  player.v = F.clamp(player.v, -playerMaxVelocity, playerMaxVelocity);
   var vel = F.angle2coords(0, 0, player.d, -player.v * mod);
 
   // Player collision
